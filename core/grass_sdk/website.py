@@ -51,7 +51,7 @@ class GrassRest(BaseClient):
         handler = retry(
             stop=stop_after_attempt(12),
             retry=retry_if_not_exception_type((LoginException, ProxyBlockedException)),
-            before_sleep=lambda retry_state, **kwargs: logger.info(f"{self.id} | Login retrying... "
+            before_sleep=lambda retry_state, **kwargs: logger.warning(f"{self.id} | Login retrying... "
                                                                    f"{retry_state.outcome.exception()}"),
             wait=wait_random(8, 12),
             reraise=True

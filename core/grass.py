@@ -86,7 +86,7 @@ class Grass(GrassWs, GrassRest, FailureCounter):
             )
 
             await self.change_proxy()
-            logger.info(f"{self.id} | Changed proxy to {self.proxy}. {msg}. Retrying...")
+            logger.warning(f"{self.id} | Changed proxy to {self.proxy}. {msg}. Retrying...")
 
             await asyncio.sleep(random.uniform(20, 30))
 
@@ -124,11 +124,11 @@ class Grass(GrassWs, GrassRest, FailureCounter):
 
                     await asyncio.sleep(random.randint(119, 120))
             except WebsocketClosedException as e:
-                logger.info(f"{self.id} | Websocket closed: {e}. Reconnecting...")
+                logger.warning(f"{self.id} | Websocket closed: {e}. Reconnecting...")
             except ConnectionResetError as e:
-                logger.info(f"{self.id} | Connection reset: {e}. Reconnecting...")
+                logger.warning(f"{self.id} | Connection reset: {e}. Reconnecting...")
             except TypeError as e:
-                logger.info(f"{self.id} | Type error: {e}. Reconnecting...")
+                logger.warning(f"{self.id} | Type error: {e}. Reconnecting...")
                 await self.delay_with_log(msg=f"{self.id} | Reconnecting with delay for some minutes...", sleep_time=60)
 
             await self.failure_handler(limit=4)
