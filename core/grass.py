@@ -135,12 +135,6 @@ class Grass(GrassWs, GrassRest, FailureCounter):
 
             await asyncio.sleep(5, 10)
 
-    async def claim_rewards(self):
-        await self.enter_account()
-        await self.claim_rewards_handler()
-
-        logger.info(f"{self.id} | Claimed all rewards.")
-
     @retry(stop=stop_after_attempt(12),
            retry=(retry_if_exception_type(ConnectionError) | retry_if_not_exception_type(ProxyForbiddenException)),
            retry_error_callback=lambda retry_state:
